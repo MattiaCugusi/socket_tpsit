@@ -9,30 +9,12 @@ import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello world!");
-        ServerSocket ss = new ServerSocket(5673);
-        Socket mySocket = ss.accept();
-        System.out.println("qualcuno si è collegato");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-        DataOutputStream out = new DataOutputStream(mySocket.getOutputStream());
-
-        String stringaRicevuta;
-
+        
+        ServerSocket ss2 = new ServerSocket(5672);
         do{
-        stringaRicevuta = in.readLine();
-        System.out.println("la stringa ricevuta: " + stringaRicevuta);
-
-        String stringaMaiuscola = stringaRicevuta.toUpperCase();
-        out.writeBytes(stringaMaiuscola + "\n");
-
-        }while(!stringaRicevuta.equals("!"));
-
-        mySocket.close();
-
-        ss.close();
-
-
-    
+          Socket s = ss2.accept();
+          MyThread t = new MyThread(s);
+          t.start();
+        } while (true);
     }
 }
